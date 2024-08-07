@@ -125,33 +125,24 @@
         let angle = 0;
         let autoRotate = parameters.animation.autoRotate;
 
-        let lastTime = performance.now(); // Add this line outside the animate function, near the top level of your script
-
-        
         function animate() {
-            let currentTime = performance.now();
-            let deltaTime = (currentTime - lastTime) / 1000; // Convert time to seconds
-            lastTime = currentTime;
-
             if (autoRotate) {
-                angle += parameters.animation.speed * deltaTime; // Adjust angle by deltaTime
+                angle += parameters.animation.speed;
                 camera.position.x = Math.sin(angle) * parameters.animation.startRadius;
                 camera.position.z = Math.cos(angle) * parameters.animation.startRadius;
                 camera.lookAt(scene.position); // Ensure the camera always looks at the scene
             }
+           // Update text orientation to always face the camera
             controls.update();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
-
         
 
 controls.addEventListener('start', () => autoRotate = false);
         window.addEventListener('touchstart', () => autoRotate = false);
 
-        lastTime = performance.now(); // Initialize lastTime before starting animation
-        animate(); // This should be the line you already have
-
+        animate();
     </script>
     <script>
 
